@@ -1,0 +1,166 @@
+				ROUTER 6
+en
+conf t
+router ospf 1
+network 10.0.0.0 0.0.0.3 area 0
+network 10.0.0.4 0.0.0.3 area 0
+passive-interface default
+no passive-interface g0/0
+no passive-interface g0/1
+do wr
+
+				ROUTER 7
+en
+conf t
+router ospf 1
+network 10.0.0.0 0.0.0.3 area 0
+network 10.0.0.8 0.0.0.3 area 0
+passive-interface default
+no passive-interface g0/0
+no passive-interface g0/2
+do wr
+
+				ROUTER 5
+en
+conf t
+router ospf 1
+network 10.0.0.4 0.0.0.3 area 0
+network 10.0.0.8 0.0.0.3 area 0
+network 10.0.0.12 0.0.0.3 area 0
+passive-interface default
+no passive-interface g0/0
+no passive-interface g0/1
+no passive-interface g0/2
+do wr
+
+				ROUTER 4
+en
+conf t
+router ospf 1
+network 10.0.0.12 0.0.0.3 area 0
+passive-interface default
+no passive-interface g0/0
+no passive-interface se0/0/1
+do wr
+
+en
+conf t
+router rip
+version 2
+network 20.0.0.0
+do wr
+
+en
+conf t
+router rip 
+redistribute ospf 1 metric 1
+exit
+router ospf 1
+redistribute rip subnets
+do wr
+
+				ROUTER 1
+en
+conf t
+router rip
+version 2
+network 20.0.0.8 
+network 20.0.0.12
+network 20.0.0.0
+network 20.0.0.4
+passive-interface default
+no passive-interface g0/0
+no passive-interface g0/1
+no passive-interface se0/0/0
+no passive-interface se0/0/1
+do wr
+
+				ROUTER 2
+en 
+conf t
+router rip
+version 2
+network 20.0.0.8
+passive-interface default
+no passive-interface g0/0
+do wr
+
+				ROUTER 3
+en
+conf t
+router rip
+version 2
+network 20.0.0.1
+passive-interface default
+no passive-interface g0/1
+do wr
+
+				ROUTER 8
+en
+conf t
+router rip 
+version 2
+network 20.0.0.4 
+passive-interface default
+no passive-interface se0/0/0
+do wr
+
+en 
+conf t
+router eigrp 1
+network 30.0.0.0 255.255.255.252
+no passive-interface g0/0
+do wr
+
+en
+conf t
+router eigrp 1
+redistribute rip metric 1 1 1 1 1
+do wr
+
+en
+conf t
+router rip
+redistribute eigrp 1 metric 1
+do wr
+
+				ROUTER 9
+en
+conf t
+router eigrp 1
+network 30.0.0.0 255.255.255.252
+network 30.0.0.4 255.255.255.252
+network 30.0.0.8 255.255.255.252
+passive-interface default
+no passive-interface g0/0
+no passive-interface g0/1
+no passive-interface g0/2
+do wr
+
+				ROUTER 10
+en
+conf t
+router eigrp 1
+network 30.0.0.4 255.255.255.252
+network 30.0.0.12 255.255.255.252
+passive-interface default
+no passive-interface g0/0
+no passive-interface g0/1
+do wr
+
+				ROUTER 11
+en
+conf t
+router eigrp 1
+network 30.0.0.8 255.255.255.252
+network 30.0.0.12 255.255.255.252
+passive-interface default 
+no passive-interface g0/0
+no passive-interface g0/2
+do wr
+
+
+
+
+
+
